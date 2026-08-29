@@ -1,13 +1,6 @@
 "use client"
 
-import {
-  AlertTriangle,
-  BadgeCheck,
-  Droplet,
-  ShieldAlert,
-  Stethoscope,
-  UserRound,
-} from "lucide-react"
+import { TriangleAlert as AlertTriangle, BadgeCheck, Droplet, ShieldAlert, Stethoscope, UserRound } from "lucide-react"
 
 import { patientProfile, scanDemoPatient } from "@/lib/mock-data"
 

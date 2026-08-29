@@ -2,13 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import {
-  ArrowLeft,
-  ArrowRight,
-  CheckCircle2,
-  Loader2,
-  Stethoscope,
-} from "lucide-react"
+import { ArrowLeft, ArrowRight, CircleCheck as CheckCircle2, Loader as Loader2, Stethoscope } from "lucide-react"
 
 import {
   ConsultationMedication,

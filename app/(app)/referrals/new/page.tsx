@@ -3,14 +3,7 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import {
-  ArrowLeft,
-  ArrowRight,
-  Send,
-  CheckCircle2,
-  Loader2,
-  Stethoscope,
-} from "lucide-react"
+import { ArrowLeft, ArrowRight, Send, CircleCheck as CheckCircle2, Loader as Loader2, Stethoscope } from "lucide-react"
 
 import {
   readPendingConsultation,

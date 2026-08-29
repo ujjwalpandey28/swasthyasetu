@@ -1,6 +1,6 @@
 "use client"
 
-import { ArrowRight, CheckCircle2, FileCheck2, Send } from "lucide-react"
+import { ArrowRight, CircleCheck as CheckCircle2, FileCheck as FileCheck2, Send } from "lucide-react"
 
 interface DecisionStepProps {
   onComplete: () => void

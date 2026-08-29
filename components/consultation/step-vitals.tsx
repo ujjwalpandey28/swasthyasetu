@@ -1,6 +1,6 @@
 "use client"
 
-import { AlertTriangle, ShieldAlert, ShieldCheck } from "lucide-react"
+import { TriangleAlert as AlertTriangle, ShieldAlert, ShieldCheck } from "lucide-react"
 
 import {
   ConsultationVitals,
