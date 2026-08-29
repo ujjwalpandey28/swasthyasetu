@@ -26,6 +26,10 @@ export interface Patient {
   phone: string
   village: string
   bloodGroup: string
+  lastVisit: string
+  activeReferral: string | null
+  followUpDue: boolean
+  recentlyScanned: boolean
 }
 
 export const patients: Patient[] = [
@@ -33,15 +37,19 @@ export const patients: Patient[] = [
     id: "p-meera",
     swasthyaId: "SW-4821-9034-1176",
     name: "Meera Sharma",
-    age: 34,
+    age: 46,
     gender: "Female",
-    primaryConcern: "Gestational diabetes — 28 weeks",
+    primaryConcern: "Hypertension with Type 2 Diabetes",
     risk: "high",
     lastActivity: "Scanned 20 min ago",
     lastVisitFacility: "Dhanwantri Nagar PHC",
     phone: "+91 98765 43210",
     village: "Dhanwantri Nagar",
-    bloodGroup: "B+",
+    bloodGroup: "O+",
+    lastVisit: "Aug 29, 2026",
+    activeReferral: "REF-847293 · Cardiology",
+    followUpDue: true,
+    recentlyScanned: true,
   },
   {
     id: "p-ramesh",
@@ -56,6 +64,10 @@ export const patients: Patient[] = [
     phone: "+91 90123 45678",
     village: "Rampur",
     bloodGroup: "O+",
+    lastVisit: "Aug 29, 2026",
+    activeReferral: "Emergency · District Hospital",
+    followUpDue: false,
+    recentlyScanned: false,
   },
   {
     id: "p-lakshmi",
@@ -70,6 +82,10 @@ export const patients: Patient[] = [
     phone: "+91 99887 66554",
     village: "Kishanganj",
     bloodGroup: "A+",
+    lastVisit: "Aug 28, 2026",
+    activeReferral: null,
+    followUpDue: true,
+    recentlyScanned: false,
   },
   {
     id: "p-arjun",
@@ -84,6 +100,10 @@ export const patients: Patient[] = [
     phone: "+91 91234 56780",
     village: "Dhanwantri Nagar",
     bloodGroup: "AB+",
+    lastVisit: "Aug 29, 2026",
+    activeReferral: "Routine · District Hospital",
+    followUpDue: false,
+    recentlyScanned: false,
   },
   {
     id: "p-fatima",
@@ -91,13 +111,143 @@ export const patients: Patient[] = [
     name: "Fatima Begum",
     age: 29,
     gender: "Female",
-    primaryConcern: "Routine antenatal check-up",
+    primaryConcern: "Routine antenatal check-up — 28 weeks",
     risk: "stable",
     lastActivity: "Visited yesterday",
     lastVisitFacility: "Sub-Centre Rampur",
     phone: "+91 93456 78901",
     village: "Rampur",
     bloodGroup: "O-",
+    lastVisit: "Aug 28, 2026",
+    activeReferral: null,
+    followUpDue: true,
+    recentlyScanned: false,
+  },
+  {
+    id: "p-suresh",
+    swasthyaId: "SW-6612-4450-8821",
+    name: "Suresh Patel",
+    age: 72,
+    gender: "Male",
+    primaryConcern: "Chronic arthritis with mobility issues",
+    risk: "high",
+    lastActivity: "Consultation yesterday",
+    lastVisitFacility: "Dhanwantri Nagar PHC",
+    phone: "+91 90011 22334",
+    village: "Kishanganj",
+    bloodGroup: "B+",
+    lastVisit: "Aug 27, 2026",
+    activeReferral: null,
+    followUpDue: true,
+    recentlyScanned: false,
+  },
+  {
+    id: "p-anita",
+    swasthyaId: "SW-7723-5561-9932",
+    name: "Anita Verma",
+    age: 31,
+    gender: "Female",
+    primaryConcern: "Pregnancy — 32 weeks, gestational diabetes screening",
+    risk: "moderate",
+    lastActivity: "Scanned 1 hr ago",
+    lastVisitFacility: "Dhanwantri Nagar PHC",
+    phone: "+91 94455 66778",
+    village: "Dhanwantri Nagar",
+    bloodGroup: "A-",
+    lastVisit: "Aug 29, 2026",
+    activeReferral: null,
+    followUpDue: true,
+    recentlyScanned: true,
+  },
+  {
+    id: "p-vikram",
+    swasthyaId: "SW-8834-6672-1043",
+    name: "Vikram Singh",
+    age: 54,
+    gender: "Male",
+    primaryConcern: "Type 2 Diabetes — poorly controlled",
+    risk: "high",
+    lastActivity: "Lab results 3 days ago",
+    lastVisitFacility: "Sub-Centre Rampur",
+    phone: "+91 95566 77889",
+    village: "Rampur",
+    bloodGroup: "O+",
+    lastVisit: "Aug 26, 2026",
+    activeReferral: "Urgent · CHC Mandalgarh",
+    followUpDue: false,
+    recentlyScanned: false,
+  },
+  {
+    id: "p-priya",
+    swasthyaId: "SW-9945-7783-2154",
+    name: "Priya Nair",
+    age: 24,
+    gender: "Female",
+    primaryConcern: "Routine check-up — no chronic conditions",
+    risk: "stable",
+    lastActivity: "Visited 3 days ago",
+    lastVisitFacility: "Dhanwantri Nagar PHC",
+    phone: "+91 96677 88990",
+    village: "Kishanganj",
+    bloodGroup: "AB-",
+    lastVisit: "Aug 26, 2026",
+    activeReferral: null,
+    followUpDue: false,
+    recentlyScanned: false,
+  },
+  {
+    id: "p-mohan",
+    swasthyaId: "SW-1056-8894-3265",
+    name: "Mohan Lal",
+    age: 63,
+    gender: "Male",
+    primaryConcern: "COPD with recurrent exacerbations",
+    risk: "high",
+    lastActivity: "Consultation 5 hrs ago",
+    lastVisitFacility: "Dhanwantri Nagar PHC",
+    phone: "+91 97788 99001",
+    village: "Dhanwantri Nagar",
+    bloodGroup: "B-",
+    lastVisit: "Aug 29, 2026",
+    activeReferral: null,
+    followUpDue: true,
+    recentlyScanned: false,
+  },
+  {
+    id: "p-kavya",
+    swasthyaId: "SW-2167-9905-4376",
+    name: "Kavya Reddy",
+    age: 5,
+    gender: "Female",
+    primaryConcern: "Vaccination due — DPT booster",
+    risk: "stable",
+    lastActivity: "Scanned 2 hrs ago",
+    lastVisitFacility: "Sub-Centre Rampur",
+    phone: "+91 98899 00112",
+    village: "Rampur",
+    bloodGroup: "A+",
+    lastVisit: "Aug 29, 2026",
+    activeReferral: null,
+    followUpDue: true,
+    recentlyScanned: true,
+  },
+  {
+    id: "p-deepak",
+    swasthyaId: "SW-3278-1016-5487",
+    name: "Deepak Joshi",
+    age: 41,
+    gender: "Male",
+    primaryConcern: "Mild hypertension — lifestyle managed",
+    risk: "moderate",
+    lastActivity: "Visited 1 week ago",
+    lastVisitFacility: "Dhanwantri Nagar PHC",
+    phone: "+91 99900 11223",
+    village: "Kishanganj",
+    bloodGroup: "O-",
+    lastVisit: "Aug 22, 2026",
+    activeReferral: null,
+    followUpDue: false,
+    recentlyScanned: false,
   },
 ]
 
@@ -592,3 +742,149 @@ export const priorityConfig: Record<
     dot: "bg-teal",
   },
 }
+
+/* ------------------------------------------------------------------ *
+ * Facility dashboard data
+ * ------------------------------------------------------------------ */
+
+export interface QueuePatient {
+  id: string
+  name: string
+  concern: string
+  waitMin: number
+  status: "waiting" | "in-progress" | "ready"
+}
+
+export const currentQueue: QueuePatient[] = [
+  { id: "q-1", name: "Mohan Lal", concern: "COPD follow-up", waitMin: 5, status: "in-progress" },
+  { id: "q-2", name: "Anita Verma", concern: "Antenatal check-up", waitMin: 12, status: "waiting" },
+  { id: "q-3", name: "Kavya Reddy", concern: "Vaccination", waitMin: 18, status: "waiting" },
+  { id: "q-4", name: "Deepak Joshi", concern: "BP review", waitMin: 25, status: "waiting" },
+  { id: "q-5", name: "Lakshmi Devi", concern: "Anemia results", waitMin: 32, status: "waiting" },
+]
+
+export interface DoctorAvailability {
+  id: string
+  name: string
+  specialty: string
+  status: "available" | "busy" | "off-duty"
+  currentPatient: string | null
+}
+
+export const availableDoctors: DoctorAvailability[] = [
+  { id: "d-1", name: "Dr. Ananya Rao", specialty: "Medical Officer", status: "busy", currentPatient: "Mohan Lal" },
+  { id: "d-2", name: "Dr. Vikas Gupta", specialty: "General Physician", status: "available", currentPatient: null },
+  { id: "d-3", name: "Sunita Devi", specialty: "ANM / Nursing", status: "available", currentPatient: null },
+  { id: "d-4", name: "Dr. Priya Singh", specialty: "Obstetrics (visiting)", status: "off-duty", currentPatient: null },
+]
+
+export interface BedStatus {
+  total: number
+  occupied: number
+  available: number
+  type: string
+}
+
+export const bedStatus: BedStatus[] = [
+  { total: 10, occupied: 7, available: 3, type: "General Ward" },
+  { total: 4, occupied: 2, available: 2, type: "Observation" },
+  { total: 2, occupied: 2, available: 0, type: "Labour Room" },
+  { total: 1, occupied: 0, available: 1, type: "Emergency" },
+]
+
+export type StockLevel = "available" | "low" | "unavailable"
+
+export interface MedicineStock {
+  name: string
+  level: StockLevel
+  quantity: string
+}
+
+export const medicineStock: MedicineStock[] = [
+  { name: "Paracetamol", level: "available", quantity: "1,240 tablets" },
+  { name: "Amlodipine", level: "available", quantity: "560 tablets" },
+  { name: "Metformin", level: "low", quantity: "85 tablets" },
+  { name: "Insulin", level: "low", quantity: "12 vials" },
+  { name: "Amoxicillin", level: "unavailable", quantity: "0 tablets" },
+]
+
+export interface DiagnosticAvailability {
+  name: string
+  level: StockLevel
+  note: string
+}
+
+export const diagnosticAvailability: DiagnosticAvailability[] = [
+  { name: "Blood Tests", level: "available", note: "CBC, glucose, lipid profile" },
+  { name: "ECG", level: "available", note: "12-lead available" },
+  { name: "X-Ray", level: "low", note: "Technician on call — limited slots" },
+  { name: "Ultrasound", level: "unavailable", note: "Referred to CHC Mandalgarh" },
+]
+
+export interface ReferralCapacityStat {
+  direction: "incoming" | "outgoing"
+  total: number
+  pending: number
+  accepted: number
+  completed: number
+}
+
+export const referralCapacity: ReferralCapacityStat[] = [
+  { direction: "outgoing", total: 14, pending: 3, accepted: 6, completed: 5 },
+  { direction: "incoming", total: 8, pending: 2, accepted: 4, completed: 2 },
+]
+
+/* ------------------------------------------------------------------ *
+ * Analytics data (Demo Data)
+ * ------------------------------------------------------------------ */
+
+export const patientAccessTrend = [
+  { month: "Mar", scans: 180, consultations: 142 },
+  { month: "Apr", scans: 210, consultations: 168 },
+  { month: "May", scans: 195, consultations: 175 },
+  { month: "Jun", scans: 248, consultations: 210 },
+  { month: "Jul", scans: 272, consultations: 235 },
+  { month: "Aug", scans: 310, consultations: 268 },
+]
+
+export const referralCompletionRate = [
+  { month: "Mar", completed: 8, total: 12 },
+  { month: "Apr", completed: 10, total: 14 },
+  { month: "May", completed: 9, total: 11 },
+  { month: "Jun", completed: 14, total: 16 },
+  { month: "Jul", completed: 12, total: 15 },
+  { month: "Aug", completed: 16, total: 18 },
+]
+
+export const avgReferralJourneyTime = [
+  { facility: "District Hospital", hours: 3.2 },
+  { facility: "Govt Medical College", hours: 5.8 },
+  { facility: "CHC Mandalgarh", hours: 2.1 },
+  { facility: "Specialist Clinic", hours: 4.5 },
+]
+
+export const highRiskDistribution = [
+  { name: "Hypertension", value: 38 },
+  { name: "Diabetes", value: 27 },
+  { name: "Cardiac", value: 14 },
+  { name: "Respiratory", value: 11 },
+  { name: "Pregnancy-related", value: 10 },
+]
+
+export const commonConditions = [
+  { condition: "Hypertension", count: 142 },
+  { condition: "Diabetes Type 2", count: 98 },
+  { condition: "Respiratory Infection", count: 76 },
+  { condition: "Anemia", count: 64 },
+  { condition: "Antenatal", count: 52 },
+  { condition: "Arthritis", count: 38 },
+]
+
+export const followUpCompletion = [
+  { month: "Mar", scheduled: 18, completed: 14 },
+  { month: "Apr", scheduled: 22, completed: 19 },
+  { month: "May", scheduled: 20, completed: 16 },
+  { month: "Jun", scheduled: 25, completed: 22 },
+  { month: "Jul", scheduled: 28, completed: 24 },
+  { month: "Aug", scheduled: 30, completed: 27 },
+]

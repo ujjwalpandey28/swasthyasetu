@@ -26,7 +26,7 @@ export function PriorityPatients() {
       </div>
 
       <ul className="divide-y divide-border">
-        {patients.map((p) => {
+        {patients.slice(0, 5).map((p) => {
           const risk = riskConfig[p.risk]
           return (
             <li
@@ -69,7 +69,7 @@ export function PriorityPatients() {
               </span>
 
               <Link
-                href="/patients"
+                href={`/patient/${p.swasthyaId}`}
                 className="inline-flex items-center gap-1 rounded-lg border border-border bg-background px-3 py-1.5 text-sm font-medium text-foreground transition-colors hover:bg-muted"
               >
                 View
