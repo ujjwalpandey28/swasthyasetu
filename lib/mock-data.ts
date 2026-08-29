@@ -101,6 +101,38 @@ export const patients: Patient[] = [
   },
 ]
 
+// Dedicated demo patient for the Universal QR Scanner flow.
+export interface ScanPatient {
+  swasthyaId: string
+  name: string
+  age: number
+  gender: "Male" | "Female" | "Other"
+  bloodGroup: string
+  village: string
+  primaryConcern: string
+  verified: boolean
+  lastRecordUpdate: string
+  linkedFacilities: number
+}
+
+export const scanDemoPatient: ScanPatient = {
+  swasthyaId: "SWA-9284-1829",
+  name: "Meera Sharma",
+  age: 46,
+  gender: "Female",
+  bloodGroup: "B+",
+  village: "Dhanwantri Nagar",
+  primaryConcern: "Gestational diabetes — antenatal monitoring",
+  verified: true,
+  lastRecordUpdate: "Updated 20 min ago",
+  linkedFacilities: 3,
+}
+
+// Normalize a Swasthya ID string for tolerant matching.
+export function normalizeSwasthyaId(value: string): string {
+  return value.trim().toUpperCase().replace(/\s+/g, "")
+}
+
 export interface Referral {
   id: string
   patientName: string

@@ -133,3 +133,46 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* QR scanner line sweep */
+@keyframes scan-sweep {
+  0% {
+    transform: translateY(0%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+.animate-scan-sweep {
+  animation: scan-sweep 2.1s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+@keyframes reticle-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+
+.animate-reticle-pulse {
+  animation: reticle-pulse 1.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-scan-sweep,
+  .animate-reticle-pulse {
+    animation: none;
+  }
+}
