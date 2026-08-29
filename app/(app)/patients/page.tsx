@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react"
 import Link from "next/link"
-import { ChevronRight, Search, Users, Filter } from "lucide-react"
+import { ChevronRight, Search, Users, ListFilter as Filter } from "lucide-react"
 
 import { patients, riskConfig } from "@/lib/mock-data"
 import { cn } from "@/lib/utils"

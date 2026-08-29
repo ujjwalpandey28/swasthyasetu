@@ -15,7 +15,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts"
-import { BarChart3, TrendingUp, Activity, Clock, AlertTriangle, CheckCircle2 } from "lucide-react"
+import { ChartBar as BarChart3, TrendingUp, Activity, Clock, TriangleAlert as AlertTriangle, CircleCheck as CheckCircle2 } from "lucide-react"
 
 import {
   avgReferralJourneyTime,
