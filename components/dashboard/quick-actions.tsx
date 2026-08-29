@@ -31,7 +31,7 @@ const actions = [
   {
     label: "Create Referral",
     description: "Transfer to another facility",
-    href: "/referrals",
+    href: "/referrals/new",
     icon: Send,
     className: "bg-card text-foreground",
     primary: false,

@@ -19,6 +19,7 @@ import {
 } from "@/lib/mock-data"
 import { ConsultationTimeline } from "@/components/patient/consultation-timeline"
 import { LatestActivityIndicator } from "@/components/patient/latest-activity-indicator"
+import { PatientReferralActions } from "@/components/patient/referral-actions"
 
 export default async function PatientProfilePage({
   params,
@@ -130,7 +131,12 @@ export default async function PatientProfilePage({
           </p>
         </section>
       ) : (
-        <ConsultationTimeline />
+        <>
+          <ConsultationTimeline />
+          <section className="rounded-2xl border border-border bg-card p-6">
+            <PatientReferralActions />
+          </section>
+        </>
       )}
     </div>
   )

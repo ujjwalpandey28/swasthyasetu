@@ -1,21 +1,45 @@
-import Link from "next/link"
-import { ChevronRight, ArrowRight } from "lucide-react"
+"use client"
 
-import { referrals, priorityConfig } from "@/lib/mock-data"
+import Link from "next/link"
+import { ChevronRight, ArrowRight, CheckCircle2 } from "lucide-react"
+
+import { useReferrals, statusBadgeLabels } from "@/lib/referral-store"
+import { referrals as staticReferrals, priorityConfig } from "@/lib/mock-data"
 import { cn } from "@/lib/utils"
 
-const statusLabel: Record<string, string> = {
-  pending: "Pending",
-  accepted: "Accepted",
-  "in-transit": "In transit",
-  completed: "Completed",
-}
-
 export function ReferralStatus() {
+  const storedReferrals = useReferrals()
+
+  // Merge stored + static for counting
+  const allReferrals = [
+    ...storedReferrals.map((r) => ({
+      id: r.id,
+      patientName: r.patientName,
+      priority: r.priority,
+      from: r.fromFacility,
+      to: r.toFacility,
+      reason: r.reason,
+      status: r.status === "follow-up" ? "completed" : "accepted",
+      raisedAt: r.createdAtLabel,
+      href: `/referrals/${r.id}`,
+    })),
+    ...staticReferrals.map((r) => ({
+      ...r,
+      href: "/referrals",
+    })),
+  ]
+
   const counts = {
-    emergency: referrals.filter((r) => r.priority === "emergency").length,
-    urgent: referrals.filter((r) => r.priority === "urgent").length,
-    routine: referrals.filter((r) => r.priority === "routine").length,
+    emergency: allReferrals.filter((r) => r.priority === "emergency").length,
+    urgent: allReferrals.filter((r) => r.priority === "urgent").length,
+    routine: allReferrals.filter((r) => r.priority === "routine").length,
+  }
+
+  const statusLabel: Record<string, string> = {
+    pending: "Pending",
+    accepted: "Accepted",
+    "in-transit": "In transit",
+    completed: "Completed",
   }
 
   return (
@@ -54,37 +78,42 @@ export function ReferralStatus() {
       </div>
 
       <ul className="divide-y divide-border border-t border-border">
-        {referrals.map((r) => {
+        {allReferrals.slice(0, 5).map((r) => {
           const cfg = priorityConfig[r.priority]
           return (
             <li key={r.id} className="px-5 py-3">
-              <div className="flex items-center justify-between gap-2">
-                <p className="text-sm font-semibold text-foreground">
-                  {r.patientName}
+              <Link href={r.href} className="block transition-colors hover:opacity-80">
+                <div className="flex items-center justify-between gap-2">
+                  <p className="text-sm font-semibold text-foreground">
+                    {r.patientName}
+                  </p>
+                  <span
+                    className={cn(
+                      "inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[11px] font-medium",
+                      cfg.className,
+                    )}
+                  >
+                    <span className={cn("size-1.5 rounded-full", cfg.dot)} />
+                    {cfg.label}
+                  </span>
+                </div>
+                <p className="mt-1 flex items-center gap-1.5 text-xs text-muted-foreground">
+                  <span className="truncate">{r.from}</span>
+                  <ArrowRight className="size-3 shrink-0" />
+                  <span className="truncate">{r.to}</span>
                 </p>
-                <span
-                  className={cn(
-                    "inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[11px] font-medium",
-                    cfg.className,
-                  )}
-                >
-                  <span className={cn("size-1.5 rounded-full", cfg.dot)} />
-                  {cfg.label}
-                </span>
-              </div>
-              <p className="mt-1 flex items-center gap-1.5 text-xs text-muted-foreground">
-                <span className="truncate">{r.from}</span>
-                <ArrowRight className="size-3 shrink-0" />
-                <span className="truncate">{r.to}</span>
-              </p>
-              <div className="mt-1.5 flex items-center justify-between">
-                <p className="truncate text-xs text-muted-foreground">
-                  {r.reason}
-                </p>
-                <span className="shrink-0 text-[11px] font-medium text-muted-foreground">
-                  {statusLabel[r.status]} · {r.raisedAt}
-                </span>
-              </div>
+                <div className="mt-1.5 flex items-center justify-between">
+                  <p className="truncate text-xs text-muted-foreground">
+                    {r.reason}
+                  </p>
+                  <span className="shrink-0 inline-flex items-center gap-1 text-[11px] font-medium text-muted-foreground">
+                    {r.status === "completed" && (
+                      <CheckCircle2 className="size-3 text-success" />
+                    )}
+                    {statusLabel[r.status]} · {r.raisedAt}
+                  </span>
+                </div>
+              </Link>
             </li>
           )
         })}
