@@ -17,6 +17,8 @@ import {
   normalizeSwasthyaId,
   scanDemoPatient,
 } from "@/lib/mock-data"
+import { ConsultationTimeline } from "@/components/patient/consultation-timeline"
+import { LatestActivityIndicator } from "@/components/patient/latest-activity-indicator"
 
 export default async function PatientProfilePage({
   params,
@@ -85,10 +87,7 @@ export default async function PatientProfilePage({
             </p>
           </div>
           <div className="text-left sm:text-right">
-            <p className="text-xs text-muted-foreground">{p.lastRecordUpdate}</p>
-            <p className="text-xs text-muted-foreground">
-              {p.linkedFacilities} linked facilities
-            </p>
+            <LatestActivityIndicator />
           </div>
         </div>
 
@@ -131,37 +130,8 @@ export default async function PatientProfilePage({
           </p>
         </section>
       ) : (
-        <section className="rounded-2xl border border-border bg-card p-6">
-          <div className="flex items-center gap-2">
-            <FileText className="size-4 text-teal" />
-            <h2 className="text-base font-semibold text-foreground">
-              Medical history
-            </h2>
-          </div>
-          <ul className="mt-4 flex flex-col gap-3">
-            <HistoryRow
-              title="Antenatal consultation"
-              detail="Glucose monitoring, insulin dose reviewed"
-              time="20 min ago · Dhanwantri Nagar PHC"
-            />
-            <HistoryRow
-              title="Lab results uploaded"
-              detail="Fasting glucose 142 mg/dL, HbA1c 6.9%"
-              time="2 days ago · District Lab, Bhilwara"
-            />
-            <HistoryRow
-              title="Referral accepted"
-              detail="High-risk pregnancy → CHC Mandalgarh"
-              time="1 week ago · Dhanwantri Nagar PHC"
-            />
-          </ul>
-        </section>
+        <ConsultationTimeline />
       )}
-
-      <p className="text-center text-xs text-muted-foreground">
-        Profile shell — the complete patient record view is coming in a later
-        step.
-      </p>
     </div>
   )
 }
@@ -196,26 +166,5 @@ function SummaryRow({ label, value }: { label: string; value: string }) {
         {value}
       </p>
     </div>
-  )
-}
-
-function HistoryRow({
-  title,
-  detail,
-  time,
-}: {
-  title: string
-  detail: string
-  time: string
-}) {
-  return (
-    <li className="flex gap-3 rounded-xl border border-border bg-background p-3.5">
-      <span className="mt-1 size-2 shrink-0 rounded-full bg-teal" />
-      <div>
-        <p className="text-sm font-medium text-foreground">{title}</p>
-        <p className="text-sm text-muted-foreground text-pretty">{detail}</p>
-        <p className="mt-0.5 text-xs text-muted-foreground">{time}</p>
-      </div>
-    </li>
   )
 }
