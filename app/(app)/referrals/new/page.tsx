@@ -3,26 +3,7 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import {
-  AlertTriangle,
-  ArrowLeft,
-  ArrowRight,
-  Activity,
-  BadgeCheck,
-  Building2,
-  CheckCircle2,
-  Clock,
-  Droplet,
-  HeartPulse,
-  Lightbulb,
-  Loader2,
-  MapPin,
-  Pill,
-  Send,
-  ShieldAlert,
-  Stethoscope,
-  UserRound,
-} from "lucide-react"
+import { TriangleAlert as AlertTriangle, ArrowLeft, ArrowRight, Activity, BadgeCheck, Building2, CircleCheck as CheckCircle2, Clock, Droplet, HeartPulse, Lightbulb, Loader as Loader2, MapPin, Pill, Send, ShieldAlert, Stethoscope, UserRound } from "lucide-react"
 
 import {
   readPendingConsultation,

@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { ChevronRight, ArrowRight, CheckCircle2 } from "lucide-react"
+import { ChevronRight, ArrowRight, CircleCheck as CheckCircle2 } from "lucide-react"
 
 import { useReferrals, statusBadgeLabels } from "@/lib/referral-store"
 import { referrals as staticReferrals, priorityConfig } from "@/lib/mock-data"
