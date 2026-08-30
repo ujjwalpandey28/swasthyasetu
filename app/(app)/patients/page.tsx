@@ -4,7 +4,8 @@ import { useMemo, useState } from "react"
 import Link from "next/link"
 import { ChevronRight, Search, Users, ListFilter as Filter } from "lucide-react"
 
-import { patients, riskConfig } from "@/lib/mock-data"
+import { patients as staticPatients, riskConfig } from "@/lib/mock-data"
+import { usePatients } from "@/lib/patients-store"
 import { cn } from "@/lib/utils"
 
 type FilterKey = "all" | "high-risk" | "active-referral" | "follow-up" | "recently-scanned"
@@ -18,8 +19,11 @@ const filters: { key: FilterKey; label: string }[] = [
 ]
 
 export default function PatientsPage() {
+  const { patients: dbPatients, loading } = usePatients()
   const [query, setQuery] = useState("")
   const [activeFilter, setActiveFilter] = useState<FilterKey>("all")
+
+  const patients = dbPatients.length > 0 ? dbPatients : staticPatients
 
   const filtered = useMemo(() => {
     let list = patients

@@ -8,6 +8,7 @@
 import { useEffect, useState } from "react"
 
 import { currentUser, patientProfile } from "@/lib/mock-data"
+import { supabase } from "@/lib/supabase"
 
 export interface ConsultationVitals {
   bpSystolic: string
@@ -95,7 +96,29 @@ export function saveConsultation(c: Omit<SavedConsultation, "id" | "createdAt">)
   const all = readStore()
   all.unshift(item)
   writeStore(all)
+  persistConsultation(item)
   return item
+}
+
+async function persistConsultation(item: SavedConsultation) {
+  const row = {
+    patient_swasthya_id: item.patientSwasthyaId,
+    patient_name: item.patientName,
+    date: item.date,
+    date_label: item.dateLabel,
+    facility: item.facility,
+    facility_type: item.facilityType,
+    vitals: item.vitals,
+    symptoms: item.symptoms,
+    notes: item.notes,
+    diagnosis: item.diagnosis,
+    clinical_notes: item.clinicalNotes,
+    recommended_action: item.recommendedAction,
+    medications: item.medications,
+    risk_level: item.riskLevel,
+  }
+  const { error } = await supabase.from("consultations").insert(row)
+  if (error) console.error("Failed to persist consultation:", error.message)
 }
 
 export function listConsultations(patientSwasthyaId?: string): SavedConsultation[] {

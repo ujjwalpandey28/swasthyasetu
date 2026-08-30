@@ -1,3 +1,6 @@
+"use client"
+
+import { useEffect, useState } from "react"
 import {
   QrCode,
   Send,
@@ -6,7 +9,8 @@ import {
   UserPlus,
 } from "lucide-react"
 
-import { recentActivity } from "@/lib/mock-data"
+import { recentActivity as staticActivity } from "@/lib/mock-data"
+import { supabase } from "@/lib/supabase"
 import { cn } from "@/lib/utils"
 
 const config = {
@@ -23,7 +27,41 @@ const config = {
   },
 } as const
 
+interface ActivityRow {
+  id: string
+  type: keyof typeof config
+  title: string
+  detail: string
+  time: string
+}
+
 export function RecentActivity() {
+  const [items, setItems] = useState<ActivityRow[]>(staticActivity)
+
+  useEffect(() => {
+    let active = true
+    async function load() {
+      const { data, error } = await supabase
+        .from("activity_log")
+        .select("*")
+        .order("created_at", { ascending: false })
+        .limit(10)
+      if (!active || error || !data) return
+      const rows: ActivityRow[] = data.map((r: Record<string, unknown>) => ({
+        id: r.id as string,
+        type: r.type as ActivityRow["type"],
+        title: r.title as string,
+        detail: r.detail as string,
+        time: r.time as string,
+      }))
+      if (rows.length > 0) setItems(rows)
+    }
+    load()
+    return () => {
+      active = false
+    }
+  }, [])
+
   return (
     <section className="rounded-2xl border border-border bg-card shadow-sm">
       <div className="border-b border-border px-5 py-4">
@@ -36,10 +74,10 @@ export function RecentActivity() {
       </div>
 
       <ol className="px-5 py-2">
-        {recentActivity.map((item, i) => {
+        {items.map((item, i) => {
           const cfg = config[item.type]
           const Icon = cfg.icon
-          const last = i === recentActivity.length - 1
+          const last = i === items.length - 1
           return (
             <li key={item.id} className="flex gap-3">
               <div className="flex flex-col items-center">

@@ -2,17 +2,8 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import {
-  LayoutDashboard,
-  QrCode,
-  Users,
-  Stethoscope,
-  Send,
-  Building2,
-  BarChart3,
-  UserCircle,
-  Activity,
-} from "lucide-react"
+import { useEffect, useState } from "react"
+import { LayoutDashboard, QrCode, Users, Stethoscope, Send, Building2, ChartBar as BarChart3, CircleUser as UserCircle, Activity, X, Menu } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { currentUser } from "@/lib/mock-data"
@@ -30,9 +21,23 @@ const navItems = [
 
 export function AppSidebar() {
   const pathname = usePathname()
+  const [mobileOpen, setMobileOpen] = useState(false)
 
-  return (
-    <aside className="sticky top-0 hidden h-svh w-64 shrink-0 flex-col border-r border-sidebar-border bg-sidebar lg:flex">
+  useEffect(() => {
+    setMobileOpen(false)
+  }, [pathname])
+
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = "hidden"
+      return () => {
+        document.body.style.overflow = ""
+      }
+    }
+  }, [mobileOpen])
+
+  const sidebarInner = (
+    <>
       <div className="flex h-16 items-center gap-2.5 border-b border-sidebar-border px-5">
         <div className="flex size-9 items-center justify-center rounded-xl bg-primary text-primary-foreground">
           <Activity className="size-5" />
@@ -99,6 +104,48 @@ export function AppSidebar() {
           </div>
         </div>
       </div>
-    </aside>
+    </>
+  )
+
+  return (
+    <>
+      {/* Desktop sidebar */}
+      <aside className="sticky top-0 hidden h-svh w-64 shrink-0 flex-col border-r border-sidebar-border bg-sidebar lg:flex">
+        {sidebarInner}
+      </aside>
+
+      {/* Mobile drawer */}
+      {mobileOpen && (
+        <div className="fixed inset-0 z-50 lg:hidden">
+          <button
+            type="button"
+            aria-label="Close navigation"
+            onClick={() => setMobileOpen(false)}
+            className="absolute inset-0 bg-foreground/40 backdrop-blur-sm animate-in fade-in"
+          />
+          <aside className="relative flex h-svh w-64 flex-col border-r border-sidebar-border bg-sidebar animate-in slide-in-from-left">
+            <button
+              type="button"
+              aria-label="Close navigation"
+              onClick={() => setMobileOpen(false)}
+              className="absolute right-3 top-3.5 z-10 flex size-8 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+            >
+              <X className="size-4" />
+            </button>
+            {sidebarInner}
+          </aside>
+        </div>
+      )}
+
+      {/* Mobile hamburger button — fixed, only visible on mobile */}
+      <button
+        type="button"
+        aria-label="Open navigation"
+        onClick={() => setMobileOpen(true)}
+        className="fixed left-3 top-3.5 z-30 flex size-9 items-center justify-center rounded-lg border border-border bg-card text-muted-foreground transition-colors hover:bg-muted hover:text-foreground lg:hidden"
+      >
+        <Menu className="size-4.5" />
+      </button>
+    </>
   )
 }

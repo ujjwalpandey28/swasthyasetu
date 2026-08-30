@@ -1,10 +1,16 @@
+"use client"
+
 import Link from "next/link"
 import { ChevronRight, Clock } from "lucide-react"
 
-import { patients, riskConfig } from "@/lib/mock-data"
+import { patients as staticPatients, riskConfig } from "@/lib/mock-data"
+import { usePatients } from "@/lib/patients-store"
 import { cn } from "@/lib/utils"
 
 export function PriorityPatients() {
+  const { patients: dbPatients } = usePatients()
+  const patients = dbPatients.length > 0 ? dbPatients : staticPatients
+
   return (
     <section className="rounded-2xl border border-border bg-card shadow-sm">
       <div className="flex items-center justify-between border-b border-border px-5 py-4">

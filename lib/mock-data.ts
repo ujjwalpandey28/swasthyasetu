@@ -5,12 +5,14 @@ export type RiskLevel = "high" | "moderate" | "stable"
 export type ReferralPriority = "emergency" | "urgent" | "routine"
 
 export const currentUser = {
-  name: "Dr. Ananya Rao",
+  name: "Dr. Ananya Singh",
   shortName: "Dr. Ananya",
   role: "Medical Officer",
-  initials: "AR",
+  roleType: "Doctor",
+  initials: "AS",
   facility: "Dhanwantri Nagar Primary Health Centre",
   facilityType: "Primary Health Centre",
+  verified: true,
 }
 
 export interface Patient {
@@ -887,4 +889,85 @@ export const followUpCompletion = [
   { month: "Jun", scheduled: 25, completed: 22 },
   { month: "Jul", scheduled: 28, completed: 24 },
   { month: "Aug", scheduled: 30, completed: 27 },
+]
+
+/* ------------------------------------------------------------------ *
+ * Profile: role-based access permissions + access log
+ * ------------------------------------------------------------------ */
+
+export interface RolePermission {
+  role: string
+  roleType: string
+  icon: string
+  permissions: string[]
+  current: boolean
+}
+
+export const rolePermissions: RolePermission[] = [
+  {
+    role: "ASHA / Frontline Health Worker",
+    roleType: "ASHA",
+    icon: "Heart",
+    permissions: [
+      "Register patients",
+      "Record basic vitals",
+      "View limited health information",
+      "Create follow-up tasks",
+    ],
+    current: false,
+  },
+  {
+    role: "Doctor",
+    roleType: "Doctor",
+    icon: "Stethoscope",
+    permissions: [
+      "View complete clinical history",
+      "Diagnose",
+      "Prescribe",
+      "Create referrals",
+    ],
+    current: true,
+  },
+  {
+    role: "Administrator",
+    roleType: "Administrator",
+    icon: "Building2",
+    permissions: [
+      "View facility analytics",
+      "Manage facility-level operations",
+    ],
+    current: false,
+  },
+]
+
+export interface AccessLogEntry {
+  id: string
+  action: string
+  detail: string
+  time: string
+  type: "access" | "consent" | "referral" | "consultation" | "emergency"
+}
+
+export const accessLog: AccessLogEntry[] = [
+  {
+    id: "log-1",
+    action: "Meera Sharma profile accessed",
+    detail: "Via QR scan — consent approved",
+    time: "10:42 AM",
+    type: "access",
+  },
+  {
+    id: "log-2",
+    action: "Patient consent recorded",
+    detail: "Standard access granted to Dr. Ananya Singh",
+    time: "10:42 AM",
+    type: "consent",
+  },
+  {
+    id: "log-3",
+    action: "Referral REF-847293 created",
+    detail: "Cardiology → District Hospital, Bhilwara",
+    time: "10:50 AM",
+    type: "referral",
+  },
 ]

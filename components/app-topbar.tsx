@@ -15,7 +15,7 @@ function todayLabel() {
 
 export function AppTopbar() {
   return (
-    <header className="sticky top-0 z-20 flex h-16 items-center gap-3 border-b border-border bg-background/80 px-4 backdrop-blur-md md:px-6">
+    <header className="sticky top-0 z-20 flex h-16 items-center gap-3 border-b border-border bg-background/80 px-4 pl-14 backdrop-blur-md md:px-6 lg:pl-6">
       {/* Facility */}
       <div className="flex items-center gap-2.5 rounded-lg border border-border bg-card px-3 py-1.5">
         <span className="flex size-7 items-center justify-center rounded-md bg-teal-muted text-teal">

@@ -13,6 +13,7 @@ import {
   clearPendingConsultation,
   saveConsultation,
 } from "@/lib/consultation-store"
+import { supabase } from "@/lib/supabase"
 
 export type ReferralStatus =
   | "created"
@@ -253,7 +254,32 @@ export function createReferral(input: {
   const filtered = all.filter((r) => r.id !== DEMO_REFERRAL_ID)
   filtered.unshift(referral)
   writeStore(filtered)
+  persistReferral(referral)
   return referral
+}
+
+async function persistReferral(r: SavedReferral) {
+  const row = {
+    patient_name: r.patientName,
+    patient_swasthya_id: r.patientSwasthyaId,
+    patient_age: r.patientAge,
+    patient_gender: r.patientGender,
+    patient_blood_group: r.patientBloodGroup,
+    from_facility: r.fromFacility,
+    to_facility: r.toFacility,
+    specialty: r.specialty,
+    priority: r.priority,
+    reason: r.reason,
+    clinical_notes: r.clinicalNotes,
+    treatment_provided: r.treatmentProvided,
+    required_tests: r.requiredTests,
+    status: r.status,
+    stages: r.stages,
+    medical_context: r.medicalContext,
+    created_at_label: r.createdAtLabel,
+  }
+  const { error } = await supabase.from("referrals").insert(row)
+  if (error) console.error("Failed to persist referral:", error.message)
 }
 
 export function getReferral(id: string): SavedReferral | undefined {
